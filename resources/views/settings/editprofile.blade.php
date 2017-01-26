@@ -33,9 +33,30 @@
                             <!-- name -->
                             <tr>
                               <th>Name</th>
-                              <th>{{ Auth::user()->name }}</th>
-                              <th><i class="glyphicon glyphicon-pencil"></i></th>
+                              <th id="showname" >{{ Auth::user()->name }}</th>
+                              <th id="editshowname" ><a href="#" onclick="editname()"><i class="glyphicon glyphicon-pencil"></i></a></th>
+                              <!-- edit -->
+                              <th id="editname" style="display:none;">
+                                <input  class="form-control" type="text" name="" value="{{ Auth::user()->name }}">
+                              </th>
+                              <th id="closename" style="display:none;">
+                                <a href="#" onclick="closename()"><i class="glyphicon glyphicon-remove"></i></a>
+                              </th>
                             </tr>
+                            <script type="text/javascript">
+                            function editname() {
+                              $('#showname').hide();
+                              $('#editshowname').hide();
+                              $('#editname').fadeIn();
+                              $('#closename').fadeIn();
+                            }
+                            function closename() {
+                              $('#editname').hide();
+                              $('#closename').hide();
+                              $('#showname').fadeIn();
+                              $('#editshowname').fadeIn();
+                            }
+                            </script>
                             <!-- Email -->
                             <tr>
                               <th>Email</th>

@@ -90,7 +90,7 @@
             <div class="content">
                 <img src="{{ asset('public/logoweb.png') }}" alt="" width="100%"/>
                 <div class="title m-b-md">
-                    ManageLife s
+                    ManageLife
                 </div>
                 <hr class="margit">
                 <div class="links">
