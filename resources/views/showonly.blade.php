@@ -126,6 +126,7 @@
               </div>
               <input id="get_id" name="get_id" type="text" style="display:none;">
               <script>
+
               setTimeout(function(){ loadpage(); }, 1000);
               setTimeout(function(){ loadpage(); }, 1000);
               function loadpage() {
@@ -161,48 +162,43 @@
                 var add = '<hr style="border-color:#888; margin:5px;">';
                 $('#countcommnet'+id).html('<i class="glyphicon glyphicon-comment"></i> Comments');
                 for(var i = 0;i<datacommet.length;i++){
+                  var img = datacommet[i].avatar;
+                  var check = img.split("/");
+                  if(check[0] == 'public'){
+                    img = '{{ asset('') }}'+datacommet[i].avatar;
+                  }
+
                   $('#countcommnet'+id).html('<i class="glyphicon glyphicon-comment"></i> Comments ('+(datacommet.length)+')');
-                  add += ' <table style="width:100%" > \
-                  <tr> \
-                    <td style="width:'+(datacommet[i].name.length + 180)+'px;"> \
-                      <div><p> \
-                      <a class="btnMenulife" href="{{ url("user") }}/'+datacommet[i].user_id+'">\
-                      <img  class="img-circle" style="border-color:#000; '+datacommet[i].filter+'" src="'+datacommet[i].avatar+'" width="40px">&nbsp;&nbsp;'+
-                      '<label style="color:#000;">'+
-                        datacommet[i].name+
-                      '</label>'+
+                  add += '<div style="margin-top:10px;">'+
+                      '<a class="btnMenulife" href="{{ url("user") }}/'+datacommet[i].user_id+'">'+
+                      '<img  class="img-circle" style="border-color:#000; '+datacommet[i].filter+'" src="'+img+'" width="40px">&nbsp;&nbsp;'+
                       '</a>'+
-                      '&nbsp;&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-option-vertical"></i> '+
-                      '</p></div> \
-                    </td> \
-                    <td> ';
+                      '<a class="btnMenulife" href="{{ url("user") }}/'+datacommet[i].user_id+'">'+
+                      '<span style="color:#000;">'+
+                        datacommet[i].name+
+                      '</span>'+
+                      '</a> :';
                     if(datacommet[i].user_id == '{{ Auth::user()->id }}'){
-                      add +=   ' <div style="margin:0px; padding-left:0px;"  id="comment'+datacommet[i].id+'" class="col-md-12" style="display:;">  '+
-                                  '<div style="margin:0px; padding-left:0px;" class="col-md-9" ><p>'+
+                      add +=   ' <span style="margin:0px; padding-left:0px; width:100%; display:;"  id="comment'+datacommet[i].id+'" >  '+
                                      datacommet[i].comment+
-                                  '</p></div>'+
-                                    '<div style="margin:0px;" class="col-md-3" align:right;>'+
-                                      '<a href="#" class="edit_tag_i" onclick="edit_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;'+
-                                      '<a href="#" class="edit_tag_i" onclick="delete_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-trash"></i></a>'+
-                                    '</div>'+
-                                '</div> ';
-                      add +=  '<div style="margin:0px; padding-left:0px; display:none;" id="editboxcomment'+datacommet[i].id+'" class="col-md-12" >'+
-                                  '<div style="margin:0px; padding-left:0px;" class="col-md-11" >'+
+                                     '<p style="float:right; padding-top:10px;" >'+
+                                       '<a href="#" class="edit_tag_i" onclick="edit_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;'+
+                                       '<a href="#" class="edit_tag_i" onclick="delete_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-trash"></i></a>'+
+                                     '</p>'+
+                                '</span> ';
+                      add +=  '<span style=" display:none; " id="editboxcomment'+datacommet[i].id+'" >'+
                                     '<input type="text"  id="editcomment'+datacommet[i].id+'" '+
                                     'onkeydown="if (event.keyCode == 13) { submitEditComment('+datacommet[i].id+' , '+id+') }" '+
-                                    'style="display:none; width:100%;" class="form-control" value="'+datacommet[i].comment+'" >'+
-                                  '</div>'+
-                                  '<div  class="col-md-1" align:right; id="close_comment'+datacommet[i].id+'">'+
+                                    'style="display:none; width:60%; border-radius:5px; padding:5px;"  value="'+datacommet[i].comment+'" >'+
+                                  '<span style="float:right; padding-top:10px;" id="close_comment'+datacommet[i].id+'">'+
                                     '<a href="#" class="edit_tag_i" onclick="close_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-remove"></i></a>'+
-                                  '</div>'+
-                              '</div>';
+                                  '</span>'+
+                              '</span><br>';
 
                     }else{
-                      add +=   ' <p>'+datacommet[i].comment+' </p> ';
+                      add +=   ' <span>'+datacommet[i].comment+' </span>';
                     }
-                   add += '</td> \
-                  </tr> \
-                  </table>';
+                    add += '</div>';
                 }
                 if(datacommet.length!=0){
                   document.getElementById("showdatatable"+id).innerHTML = add;

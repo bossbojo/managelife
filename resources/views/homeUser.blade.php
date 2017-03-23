@@ -13,27 +13,109 @@
 <!-- body show  -->
                                             <!-- menu bar  -->
 <div class="container-fluid" style="background-color:#111; margin-left:-0px;" id="style-1">
-  <div class="col-md-3" id="menubarleft" style=" margin-left:-25px;" ></div>
-  <script>
-  menubarleft();
-  function menubarleft() {
-    $( "#menubarleft" ).load( "{{ url('menubarleft') }}");
-  }
-  function confirmclosebox() {
-      var p = new Popelt({
-        title: 'ท่านต้องการ "ออกจากระบบ" หรือไม่',
-        closeButton: false,
-        escClose: false,
-        modal: true
-      });
-      p.addButton('Yes','btn btn-danger', function(){
-        $('#logout').click();
-        p.close();
-      });
-      p.addCancelButton();
-      p.show();
-  }
-  </script>
+  <div class="col-md-3" id="menubarleft" style=" margin-left:-25px;" >
+
+    <div class="panel panel-default" style="border-radius-: 20px; background-color:#111; border-color:#111;">
+        <div class="panel-heading border-radius-top-20px" style=" background-color:#cc9900; border-color:#888; text-align:center;" align="center" >
+          <a href="{{ url('home') }}" class="btnMenulife" align="center">
+              <img  class="img-circle" style="border-color:#000; {{ Auth::user()->filter }} " src="{{ asset(''.Auth::user()->avatar) }}" width="100px">
+              <span for="" style="font-size:150%; color:#000;"> {{ Auth::user()->name }}</span>
+          </a>
+        </div>
+        <div class=" border-radius-bottom-20px" style="border-color:#111;">
+              <div class="nano-content">
+                <ul class="gw-nav gw-nav-list">
+                  <li class="init-arrow-down">
+                    <a href="javascript:void(0)" style=" font-size:20px; padding-top:10px; padding-left:50px; letter-spacing: 4px;">
+                      <img  src="{{ asset('public/icon/portfolio.png') }}" width="35" alt=""> Portfolio <b class="gw-arrow"></b>
+                    </a>
+                    <ul class="gw-submenu">
+                      <li>
+                        <a href="{{ url('/portfolio') }}" style=" font-size:17px; padding-top:10px; padding-left:120px; " >
+                          <img  src="{{ asset('public/icon/preview.png') }}" width="25" alt=""> Preview Portfolio
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{ url('/feedback') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
+                          <img  src="{{ asset('public/icon/feedback-icon-3.png') }}" width="25" alt=""> Feedback Portfolio
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{ url('/customportfolio') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
+                          <img  src="{{ asset('public/icon/edit.png') }}" width="25" alt=""> Edit Portfolio
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="gw-submenu">
+                    <a href="{{ url('/fileupload') }}" style=" font-size:20px; padding-top:10px; padding-left:50px; letter-spacing: 4px; ">
+                      <img  src="{{ asset('public/icon/uploadpng.png') }}" width="35" alt=""> File Upload
+                    </a>
+                  </li>
+                  <li class="gw-submenu">
+                    <a href="{{ url('/yourfavouriteto') }}" style=" font-size:20px; padding-top:10px; padding-left:50px; letter-spacing: 4px;">
+                      <img  src="{{ asset('public/icon/star.png') }}" width="35" alt=""> Your favourite
+                    </a>
+                  </li>
+                  <li class="gw-submenu">
+                    <a href="{{ url('/yourfriends') }}" style=" font-size:20px; padding-top:10px; padding-left:50px; letter-spacing: 4px;">
+                      <img  src="{{ asset('public/icon/friend.png') }}" width="35" alt=""> Friends
+                    </a>
+                  </li>
+                  <li class="init-arrow-down">
+                    <a href="javascript:void(0)" style=" font-size:20px; padding-top:10px; padding-left:50px; letter-spacing: 4px; ">
+                      <img  src="{{ asset('public/icon/settings.png') }}" width="35" alt=""> Setting <b class="gw-arrow"></b>
+                    </a>
+                    <ul class="gw-submenu">
+                      <li>
+                        <a href="{{ url('settings') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
+                          <img  src="{{ asset('public/icon/settings.png') }}" width="25" alt=""> Setting
+                        </a>
+                      </li>
+                      @if(Auth::user()->provider == 'managelife')
+                      <li>
+                        <a href="{{ url('settings/changepass') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
+                          <img  src="{{ asset('public/icon/changepass.ico') }}" width="25" alt=""> Change Password
+                        </a>
+                      </li>
+                      @endif
+                      <li>
+                        <a href="{{ url('settings/changeimage') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
+                          <img  src="{{ asset('public/icon/camerachage.png') }}" width="25" alt=""> Change image profile
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{ url('settings/changeimagecover') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
+                          <img  src="{{ asset('public/icon/imgcover.png') }}" width="25" alt=""> Change image cover
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{ url('settings/editprofile') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
+                          <img  src="{{ asset('public/icon/editprofile.png') }}" width="25" alt=""> Edit Profile
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="gw-submenu">
+                    <a href="#" style=" font-size:20px; padding-top:10px; padding-left:50px; letter-spacing: 4px; ">
+                      <img  src="{{ asset('public/icon/contact-us.png') }}" width="35" alt=""> contact us
+                    </a>
+                  </li>
+                  <li class="gw-submenu">
+                    <a href="#" onclick="confirmclosebox()" style=" font-size:20px; padding-top:10px; padding-left:50px; letter-spacing: 4px; ">
+                      <img  src="{{ asset('public/icon/logout.png') }}" width="35" alt=""> Logout
+                    </a>
+                  </li>
+                  <br><br>
+                  <li class="gw-submenu" style="text-align:center;">
+                      <button href="#" class="btnMenulife"><img style="margin:-16px ;" src="{{ asset('favicon.ico') }}" width="200" alt=""></button>
+                  </li>
+              </div>
+              <br><br><br><br><br>
+        </div>
+    </div>
+
+  </div>
                                                                     <!-- tag post  -->
         <div class="col-md-6 showdatta" style="margin:-20px; overflow-y:scroll; z-index: 5;" id="style-1">
           <script type="text/javascript">
@@ -278,48 +360,43 @@
                 var add = '<hr style="border-color:#888; margin:5px;">';
                 $('#countcommnet'+id).html('<i class="glyphicon glyphicon-comment"></i> Comments');
                 for(var i = 0;i<datacommet.length;i++){
+                  var img = datacommet[i].avatar;
+                  var check = img.split("/");
+                  if(check[0] == 'public'){
+                    img = '{{ asset('') }}'+datacommet[i].avatar;
+                  }
+
                   $('#countcommnet'+id).html('<i class="glyphicon glyphicon-comment"></i> Comments ('+(datacommet.length)+')');
-                  add += ' <table style="width:100%" > \
-                  <tr> \
-                    <td style="width:'+(datacommet[i].name.length + 180)+'px;"> \
-                      <div><p> \
-                      <a class="btnMenulife" href="{{ url("user") }}/'+datacommet[i].user_id+'">\
-                      <img  class="img-circle" style="border-color:#000; '+datacommet[i].filter+'" src="'+datacommet[i].avatar+'" width="40px">&nbsp;&nbsp;'+
-                      '<label style="color:#000;">'+
-                        datacommet[i].name+
-                      '</label>'+
+                  add += '<div style="margin-top:10px;">'+
+                      '<a class="btnMenulife" href="{{ url("user") }}/'+datacommet[i].user_id+'">'+
+                      '<img  class="img-circle" style="border-color:#000; '+datacommet[i].filter+'" src="'+img+'" width="40px">&nbsp;&nbsp;'+
                       '</a>'+
-                      '&nbsp;&nbsp;&nbsp;&nbsp;<i class="glyphicon glyphicon-option-vertical"></i> '+
-                      '</p></div> \
-                    </td> \
-                    <td> ';
+                      '<a class="btnMenulife" href="{{ url("user") }}/'+datacommet[i].user_id+'">'+
+                      '<span style="color:#000;">'+
+                        datacommet[i].name+
+                      '</span>'+
+                      '</a> :';
                     if(datacommet[i].user_id == '{{ Auth::user()->id }}'){
-                      add +=   ' <div style="margin:0px; padding-left:0px;"  id="comment'+datacommet[i].id+'" class="col-md-12" style="display:;">  '+
-                                  '<div style="margin:0px; padding-left:0px;" class="col-md-9" ><p>'+
+                      add +=   ' <span style="margin:0px; padding-left:0px; width:100%; display:;"  id="comment'+datacommet[i].id+'" >  '+
                                      datacommet[i].comment+
-                                  '</p></div>'+
-                                    '<div style="margin:0px;" class="col-md-3" align:right;>'+
-                                      '<a href="#" class="edit_tag_i" onclick="edit_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;'+
-                                      '<a href="#" class="edit_tag_i" onclick="delete_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-trash"></i></a>'+
-                                    '</div>'+
-                                '</div> ';
-                      add +=  '<div style="margin:0px; padding-left:0px; display:none;" id="editboxcomment'+datacommet[i].id+'" class="col-md-12" >'+
-                                  '<div style="margin:0px; padding-left:0px;" class="col-md-11" >'+
+                                     '<p style="float:right; padding-top:10px;" >'+
+                                       '<a href="#" class="edit_tag_i" onclick="edit_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;'+
+                                       '<a href="#" class="edit_tag_i" onclick="delete_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-trash"></i></a>'+
+                                     '</p>'+
+                                '</span> ';
+                      add +=  '<span style=" display:none; " id="editboxcomment'+datacommet[i].id+'" >'+
                                     '<input type="text"  id="editcomment'+datacommet[i].id+'" '+
                                     'onkeydown="if (event.keyCode == 13) { submitEditComment('+datacommet[i].id+' , '+id+') }" '+
-                                    'style="display:none; width:100%;" class="form-control" value="'+datacommet[i].comment+'" >'+
-                                  '</div>'+
-                                  '<div  class="col-md-1" align:right; id="close_comment'+datacommet[i].id+'">'+
+                                    'style="display:none; width:60%; border-radius:5px; padding:5px;"  value="'+datacommet[i].comment+'" >'+
+                                  '<span style="float:right; padding-top:10px;" id="close_comment'+datacommet[i].id+'">'+
                                     '<a href="#" class="edit_tag_i" onclick="close_comment('+datacommet[i].id+','+id+')"><i class="glyphicon glyphicon-remove"></i></a>'+
-                                  '</div>'+
-                              '</div>';
+                                  '</span>'+
+                              '</span><br>';
 
                     }else{
-                      add +=   ' <p>'+datacommet[i].comment+' </p> ';
+                      add +=   ' <span>'+datacommet[i].comment+' </span>';
                     }
-                   add += '</td> \
-                  </tr> \
-                  </table>';
+                    add += '</div>';
                 }
                 if(datacommet.length!=0){
                   document.getElementById("showdatatable"+id).innerHTML = add;
@@ -411,13 +488,19 @@
         <div class="col-md-3">
             <div class="panel panel-default" style="width:122%; border-radius:0px;  margin:0px; border-color:#888;">
                 <div class="panel-heading" style=" width:100%; border-color:#888; margin:0px; padding:0px;" >
-                  <img src="{{ asset('public/default-img/default-bg.jpg') }}" width="100%" alt="" style="margin:0px; object-fit: cover;">
-                   <div class="center">
-                     <a href="{{ url('home') }}" class="btnMenulife" >
-                       <img  class="img-circle" style="border-color:#000; {{ $UserView->filter }}" src="{{ $UserView->avatar }}" width="120px"><br>
-                     </a>
-                        <label for="">{{ $UserView->name }}</label>
-                   </div>
+                  <img src="{{ asset($UserView->cover) }}" width="100%" height="350px" alt="" style="margin:0px; object-fit: cover;">
+                  <div class="center" align="center">
+                    <a href="{{ url('home') }}" class="btnMenulife" >
+                      @if($UserView->provider == 'managelife')
+                      <img  class="img-circle" style="border-color:#000; {{ $UserView->filter }}" src="{{ asset($UserView->avatar) }}" width="120px"><br>
+                      @else
+                      <img  class="img-circle" style="border-color:#000; {{ $UserView->filter }}" src="{{ $UserView->avatar }}" width="120px"><br>
+                      @endif
+                    </a>
+                    <div class="" style="background-color:rgba(0, 0, 0, 0.59); padding:5px; color:#fff; border-radius:5px;">
+                      {{ $UserView->name }}
+                    </div>
+                  </div>
                    <div class="topleft">
                      @if($statusfriend == null)
                      <a href="#" id="Addfriend" class="btn btn-default" style="display:;" onclick="addfriend('{{ Auth::user()->id }}','{{ $UserView->id }}')"><i class="glyphicon glyphicon-plus"></i> Add friend</a>
@@ -442,13 +525,63 @@
                     <a href="#" id="RemoveFriend2" class="btn btn-default" style="display:none;" onclick="RemoveFriend('{{ Auth::user()->id }}','{{ $UserView->id }}')"><i class="glyphicon glyphicon-option-horizontal"></i> Remove friend</a>
                    </div>
                 </div>
+                <?php
+                use App\OtherDetail;
+                use App\DetailProfile;
+                $DetailProfile = DetailProfile::find($UserView->id );
+                $OtherDetail = DB::table('other_detail')
+                          ->where('user_id', '=', $UserView->id)
+                          ->get();
+                 ?>
                 <div class="panel-body" style="background-color:#555; width:100%;">
                   <div class="panel-body" style="width:100%; background-color:#555; color:#fff;padding:30px;">
-                      <div class="col-md-6" style="padding:;">NickName : BosS <br> Birthday :  22/09/37 </div>
-                      <div class="col-md-6" style="padding:;">Gender : male <br> Age :  22 </div><br><br>
+                    <h3>About me</h3>
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td style="width:160px; border-color:#777;"><i class="glyphicon glyphicon-user"></i> Name</td>
+                          <td style="border-color:#777;"> {{ $UserView->name }}</td>
+                        </tr>
+                        <tr>
+                          <td style="width:160px; border-color:#777;"><i class="glyphicon glyphicon-envelope"></i> Email</td>
+                          <td style="border-color:#777;"> {{ $UserView->email }}</td>
+                        </tr>
+                        @if($DetailProfile != '')
+                        <tr>
+                          <td style="width:160px; border-color:#777;"><i class="glyphicon glyphicon-leaf"></i> Gender</td>
+                          <td style="border-color:#777;"> {{ $DetailProfile->gender }}</td>
+                        </tr>
+                        <tr>
+                          <td style="width:160px; border-color:#777;"><i class="glyphicon glyphicon-calendar"></i> Birthday</td>
+                          <td style="border-color:#777;"> {{ $DetailProfile->birthday }}</td>
+                        </tr>
+                        @else
+                        <tr>
+                          <td style="width:160px; border-color:#777;"><i class="glyphicon glyphicon-leaf"></i> Gender</td>
+                          <td style="border-color:#777;"> - </td>
+                        </tr>
+                        <tr>
+                          <td style="width:160px; border-color:#777;"><i class="glyphicon glyphicon-calendar"></i> Birthday</td>
+                          <td style="border-color:#777;"> - </td>
+                        </tr>
+                        @endif
+                      <?php
+                      if($OtherDetail != ''){
+                      foreach ($OtherDetail as $OtherDetails) {
+                       ?>
+                       <tr>
+                         <td style="width:160px; border-color:#777;"><i class="{{ $OtherDetails->icon }}"></i> {{ $OtherDetails->topic }}</td>
+                         <td style="border-color:#777;"> {{ $OtherDetails->detail }}</td>
+                       </tr>
+                       <?php } }?>
+                       </tbody>
+                    </table>
+                    <?php
+                    $toport = url('portfolio').'/'.$UserView->id;
+                     ?>
                       <hr style="width:50%;">
                       <center>
-                        <a href="#" class="btn btn-primary btn-lg btn-lg btnprofolio">
+                        <a href="{{ $toport }}" class="btn btn-primary btn-lg btn-lg btnprofolio">
                         <img  src="{{ asset('public/icon/portfolio.png') }}" width="40" alt="">
                         <label for="" style="letter-spacing: 5px;">
                           | Portfolio

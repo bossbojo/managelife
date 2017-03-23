@@ -15,8 +15,6 @@ class CreateDetailProfileTable extends Migration
     {
       Schema::create('detail_profile', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('user_id')->unsigned();
-          $table->foreign('user_id')->references('id')->on('users');
           $table->string('gender')->nullable();
           $table->string('birthday')->nullable();
           $table->mediumText('other')->nullable();

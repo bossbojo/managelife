@@ -1,0 +1,26 @@
+.btnplus {
+background: #d93434;
+background-image: -webkit-linear-gradient(top, #d93434, #c75757);
+background-image: -moz-linear-gradient(top, #d93434, #c75757);
+background-image: -ms-linear-gradient(top, #d93434, #c75757);
+background-image: -o-linear-gradient(top, #d93434, #c75757);
+background-image: linear-gradient(to bottom, #d93434, #c75757);
+-webkit-border-radius: 28;
+-moz-border-radius: 28;
+border-radius: 28px;
+font-family: Arial;
+color: #ffffff;
+font-size: 34px;
+padding: 10px 20px 10px 20px;
+text-decoration: none !important;
+}
+
+.btnplus:hover {
+background: #fc3ca3;
+background-image: -webkit-linear-gradient(top, #fc3ca3, #db2e7c);
+background-image: -moz-linear-gradient(top, #fc3ca3, #db2e7c);
+background-image: -ms-linear-gradient(top, #fc3ca3, #db2e7c);
+background-image: -o-linear-gradient(top, #fc3ca3, #db2e7c);
+background-image: linear-gradient(to bottom, #fc3ca3, #db2e7c);
+text-decoration: none !important;
+}

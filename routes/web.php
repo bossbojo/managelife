@@ -24,6 +24,12 @@ Route::get('/test', function () {
 Route::get('/test2', function () {
     return view('test2');
 });
+Route::get('/test3', function () {
+    return view('test3');
+});
+Route::get('/testpresent', function () {
+    return view('portfolio.present');
+});
 Route::get('/app_mobile', function () {
     return view('layouts.app_mobile');
 });
@@ -69,19 +75,46 @@ Route::get('/removefriend', 'HomeController@removefriend');
 Route::get('/getalertall/{id}', 'HomeController@getalertall');
 Route::get('/getalert/{id}', 'HomeController@getalert');
 Route::get('/openalert/{id}', 'HomeController@openalert');
-Route::post('/saveImgPro', 'HomeController@saveImgPro');
 Route::get('/yourfriends', function () {
     return view('friend.friends');
 });
 Route::get('/menubarleft', function () {
     return view('layouts.menubarleft');
 });
+/*
+|--------------------------------------------------------------------------
+| Question and Answer
+|--------------------------------------------------------------------------
+*/
 Route::get('/question.and.answer', function () {
     return view('QandA');
 });
 Route::get('/show.QA', function () {
     return view('showQA');
 });
+Route::get('/show.Q', function () {
+    return view('showQ');
+});
+Route::get('/add.Q', function () {
+    return view('AddQ');
+});
+Route::get('/edit.Q', function () {
+    return view('EditQ');
+});
+Route::get('/show.success', function () {
+    return view('QAsaveSuccess');
+});
+Route::get('/showQ/{id}', 'QandAController@showQ');
+Route::get('/showQ/{id}/{idalert}', 'QandAController@showQ2');
+Route::get('/toedit/{id}', 'QandAController@toedit');
+Route::get('/deleteQ/{id}', 'QandAController@deleteQ');
+Route::post('/SaveNewQuestion', 'QandAController@SaveNewQuestion');
+Route::post('/AddAnswer', 'QandAController@AddAnswer');
+Route::post('/EditQuestion', 'QandAController@EditQuestion');
+Route::post('/EditAnswer/{idQ}', 'QandAController@EditAnswer');
+Route::get('/deleteA/{id}/{idQ}', 'QandAController@deleteA');
+Route::get('/editA/{id}/{idQ}', 'QandAController@editA');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -129,6 +162,64 @@ Route::get('/settings/changepass', function () {
     return view('settings.changepass');
   }
 });
+
 Route::get('/settings/editprofile', function () { return view('settings.editprofile'); });
 Route::get('/settings/changeimage', function () { return view('settings.changeimage'); });
+Route::post('/saveImgPro', 'HomeController@saveImgPro');
+Route::get('/settings/changeimagecover', function () { return view('settings.changeimagecover'); });
+Route::post('/saveImgCover', 'HomeController@saveImgCover');
 Route::post('/changepassword', 'SaveSettingController@changepassword');
+
+Route::get('/editname', 'EditprofileController@editname');
+Route::get('/editgender', 'EditprofileController@editgender');
+Route::get('/editbirthday', 'EditprofileController@editbirthday');
+Route::get('/addotherTopic', 'EditprofileController@addotherTopic');
+Route::get('/deleteOther', 'EditprofileController@deleteOther');
+Route::get('/editother', 'EditprofileController@editother');
+/*
+|--------------------------------------------------------------------------
+| portfolio
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/portfolio', 'SavePortController@showportfolio');
+Route::get('/portfolio/{id}', 'SavePortController@showportfolioUser');
+Route::get('/feedback/{id}/{user_id}', 'SavePortController@showportfolioUserAlert');
+Route::get('/savefeedback', 'SavePortController@savefeedback');
+Route::get('/feedback', function () {
+    return view('portfolio.feedbackAndFavorite');
+});
+Route::get('/yourfavouriteto', function () {
+    return view('portfolio.yourfavourite');
+});
+Route::post('/saveportfolioall','SavePortController@saveportfolioall');
+Route::post('/saveprofileport','SavePortController@saveprofileport');
+Route::post('/savevideotextport','SavePortController@savevideotextport');
+Route::post('/savephototextport','SavePortController@savephototextport');
+Route::post('/savetextport','SavePortController@savetextport');
+Route::post('/savevideoport','SavePortController@savevideoport');
+Route::post('/savephotoport','SavePortController@savephotoport');
+Route::post('/savecolorport','SavePortController@savecolorport');
+Route::post('/savebgportfolio', 'SavePortController@saveBackground');
+Route::get('/customportfolio', function () {
+    return view('portfolio.customportfolio');
+});
+Route::get('/enfavorite', 'SavePortController@enfavorite');
+Route::get('/defavorite', 'SavePortController@defavorite');
+
+Route::get('/listpresent', 'ListpresentController@showlist');
+Route::get('/getdataslide/{id}', 'ListpresentController@getdataslide');
+Route::get('/savedataslide', 'ListpresentController@savedataslide');
+Route::get('/savedataslide', 'ListpresentController@savedataslide');
+
+Route::get('/presentfull', 'ListpresentController@presentfull');
+Route::get('/presentUserfull/{id}', 'ListpresentController@presentUserfull');
+
+/*
+|--------------------------------------------------------------------------
+| file upload
+|--------------------------------------------------------------------------
+*/
+Route::get('/fileupload', function () {
+    return view('fileupload.allfile');
+});

@@ -248,8 +248,15 @@ foreach ($users as $yourstatus) {
                 <table style="width:100%">
                 <tr>
                   <td style="width:{{ strlen(Auth::user()->name)+150 }}px;">
-                    <img  class="img-circle" style="border-color:#000; {{ $UserView->filter }}" src="{{ Auth::user()->avatar }}" width="40px">
-                    &nbsp;&nbsp; {{ Auth::user()->name }}
+                    <?php
+                      $img = Auth::user()->avatar;
+                      $check = explode("/", $img);
+                      if($check[0] == 'public'){
+                        $img = asset(Auth::user()->avatar);
+                      }
+                     ?>
+                    <img  class="img-circle" style="border-color:#000; {{ $UserView->filter }}" src="{{ $img }}" width="40px">
+                    &nbsp;{{ Auth::user()->name }}
                   </td>
                   <td>
                       <input type="text"  class="form-control"  onkeydown="if (event.keyCode == 13) { submitComment('{{ $yourstatus->id }}' , '{{  Auth::user()->id }}') }" style=" resize: none;" id="comment{{ $yourstatus->id }}" name="comment{{ $yourstatus->id }}" rows="1" width="100%" placeholder="แสดงความคิดเห็น" >

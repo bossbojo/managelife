@@ -39,18 +39,28 @@ if($yourstatus == null){
               $pieces = explode(".", $yourstatus->path);
               $typefile = $pieces[count($pieces)-1];
              ?>
-              <ul class="dropdown-menu dropdown-menu-right" style="background-color:#888;">
-                @if($yourstatus->type != 'text')
-                <li><a href="#" onclick="editport( '{{ $yourstatus->id }}' ,'{{ $yourstatus->status }}' ,'{{ asset($yourstatus->path) }}' ,'{{ $typefile }}','{{ $yourstatus->type }}')"><i class="glyphicon glyphicon-cog"></i> Edit</a></li>
+             @if($yourstatus->friend_id == Auth::user()->id)
+               <ul class="dropdown-menu dropdown-menu-right" style="background-color:#888;">
+                 @if($yourstatus->type != 'text')
+                 <li><a href="#" onclick="editport( '{{ $yourstatus->id }}' ,'{{ $yourstatus->status }}' ,'{{ asset($yourstatus->path) }}' ,'{{ $typefile }}','{{ $yourstatus->type }}')"><i class="glyphicon glyphicon-cog"></i> Edit</a></li>
+                 @else
+                 <li><a href="#" onclick="editporttext( '{{ $yourstatus->id }}' ,'{{ $yourstatus->status }}'  )"><i class="glyphicon glyphicon-cog"></i> Edit</a></li>
+                 @endif
+                 <li><a href="#" onclick="deleteport( '{{ $yourstatus->id }}' ,'<?php print url('/deletePost'); ?>')"><i class="glyphicon glyphicon-trash"></i> Delete</a></li>
+               </ul>
                 @else
-                <li><a href="#" onclick="editporttext( '{{ $yourstatus->id }}' ,'{{ $yourstatus->status }}'  )"><i class="glyphicon glyphicon-cog"></i> Edit</a></li>
+                <ul class="dropdown-menu dropdown-menu-right" style="background-color:#888;">
+                  <li><a href="#" onclick="More( '{{ $yourstatus->id }}' )"><i class="glyphicon glyphicon-exclamation-sign"></i> Report</a></li>
+                </ul>
                 @endif
-                <li><a href="#" onclick="deleteport( '{{ $yourstatus->id }}' ,'<?php print url('/deletePost'); ?>')"><i class="glyphicon glyphicon-trash"></i> Delete</a></li>
-              </ul>
             </div>
         </div>
           <a href="{{ url('/home') }}" class="btnMenulife" style="color:#000;">
+            @if($user->provider == 'managelife')
+            <img class="img-circle" style="{{ $user->filter }}" src="{{ asset($user->avatar) }}" width="60px">
+            @else
             <img class="img-circle" style="{{ $user->filter }}" src="{{ $user->avatar }}" width="60px">
+            @endif
             <label for="" style="font-size:18px;">{{ $user->name }}</label>
           </a>
           <span style="color:#555; padding-top:-20; font-size:12px;" >
@@ -222,8 +232,15 @@ if($yourstatus == null){
                 <hr style="border-color:#888; margin:5px;">
                 <table style="width:100%">
                 <tr>
+                  <?php
+                    $img = Auth::user()->avatar;
+                    $check = explode("/", $img);
+                    if($check[0] == 'public'){
+                      $img = asset(Auth::user()->avatar);
+                    }
+                   ?>
                   <td style="width:{{ strlen(Auth::user()->name)+150 }}px;">
-                    <img  class="img-circle" style="border-color:#000; {{ Auth::user()->filter }}" src="{{ Auth::user()->avatar }}" width="40px">
+                    <img  class="img-circle" style="border-color:#000; {{ Auth::user()->filter }}" src="{{ $img }}" width="40px">
                     {{ Auth::user()->name }}
                   </td>
                   <td>

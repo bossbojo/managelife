@@ -63,7 +63,7 @@ foreach ($users as $yourstatus) {
               @endif
             </div>
         </div>
-          <a href="{{ url('/user').$yourstatus->friend_id }}" class="btnMenulife" style="color:#000;">
+          <a href="{{ url('/user/').'/'.$yourstatus->friend_id }}" class="btnMenulife" style="color:#000;">
             <img class="img-circle" style="{{ $yourstatus->filter }}" src="{{ asset(''.$yourstatus->avatar) }}" width="60px">
             <label for="" style="font-size:18px;">{{ $yourstatus->name }}</label>
           </a>
@@ -236,9 +236,16 @@ foreach ($users as $yourstatus) {
                 <hr style="border-color:#888; margin:5px;">
                 <table style="width:100%">
                 <tr>
+                  <?php
+                    $img = Auth::user()->avatar;
+                    $check = explode("/", $img);
+                    if($check[0] == 'public'){
+                      $img = asset(Auth::user()->avatar);
+                    }
+                   ?>
                   <td style="width:{{ strlen(Auth::user()->name)+150 }}px;">
-                    <img  class="img-circle" style="border-color:#000; {{ Auth::user()->filter }}" src="{{ Auth::user()->avatar }}" width="40px">
-                    &nbsp;&nbsp; {{ Auth::user()->name }}
+                    <img  class="img-circle" style="border-color:#000; {{ Auth::user()->filter }}" src="{{ $img }}" width="40px">
+                    &nbsp;{{ Auth::user()->name }}
                   </td>
                   <td>
                       <input type="text"  class="form-control"  onkeydown="if (event.keyCode == 13) { submitComment('{{ $yourstatus->id }}' , '{{  Auth::user()->id }}') }" style=" resize: none;" id="comment{{ $yourstatus->id }}" name="comment{{ $yourstatus->id }}" rows="1" width="100%" placeholder="แสดงความคิดเห็น" >

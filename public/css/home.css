@@ -66,6 +66,19 @@ background-color:#555555;
     right: 25px;
     font-size: 18px;
 }
+.topright3 {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 18px;
+}
+.bottomleft {
+    position: absolute;
+    bottom: 10px;
+    left: 16px;
+    font-size: 18px;
+}
+
 .imgshow {
     background-color: #fff;
     border: 1px solid #ddd;

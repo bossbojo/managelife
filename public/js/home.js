@@ -83,31 +83,31 @@ $(function () {
          if(TypeNamefile == "wmv"){
            popup_worng('**คำเตือน** ไฟล์วิดีโอไม่ถูกต้อง');
          }else{
-           $('#Img').attr('src',"{{ asset('public/icon/preview_video.png') }}");
+           $('#Img').attr('src',"public/icon/preview_video.png");
            $("#showImg").fadeIn();
          }
        }
        if(Typefile=="audio"){
-         $('#Img').attr('src',"{{ asset('public/icon/preview_audio.png') }}");
+         $('#Img').attr('src',"public/icon/preview_audio.png");
          $("#showImg").fadeIn();
        }
        if(Typefile=="application"){
          if(TypeNamefile == "doc" || TypeNamefile == "docx"){
-           $('#Img').attr('src',"{{ asset('/public/icon/preview_doc.png') }}");
+           $('#Img').attr('src',"public/icon/preview_doc.png");
            $("#showImg").fadeIn();
          }else if(TypeNamefile == "ppt" || TypeNamefile == "pptx"){
-           $('#Img').attr('src',"{{ asset('/public/icon/preview_pp.png') }}");
+           $('#Img').attr('src',"public/icon/preview_pp.png");
            $("#showImg").fadeIn();
          }else if(TypeNamefile == "xlsx" || TypeNamefile == "xlsm" || TypeNamefile == "xlsb"){
-           $('#Img').attr('src',"{{ asset('/public/icon/preview_excel.png') }}");
+           $('#Img').attr('src',"public/icon/preview_excel.png");
            $("#showImg").fadeIn();
          }else if(TypeNamefile == "pdf"){
-           $('#Img').attr('src',"{{ asset('/public/icon/preview_pdf.png') }}");
+           $('#Img').attr('src',"public/icon/preview_pdf.png");
            $("#showImg").fadeIn();
          }else if(TypeNamefile == "exe"){
            popup_worng('**คำเตือน** ไม่อนุญาติให้อัพไฟล์ .exe');
          }else{
-           $('#Img').attr('src',"{{ asset('/public/icon/preview_file.png') }}");
+           $('#Img').attr('src',"public/icon/preview_file.png");
            $("#showImg").fadeIn();
          }
        }
@@ -135,28 +135,28 @@ function editport(id,text,path,type,type2){
       $('#image_edit').fadeIn();
     }
     if(type2 == 'video' ){
-      $('#image_edit').attr('src',"{{ asset('public/icon/preview_video.png') }}");
+      $('#image_edit').attr('src',"public/icon/preview_video.png");
       $("#image_edit").fadeIn();
     }
     if(type2 == 'audio' ){
-      $('#image_edit').attr('src',"{{ asset('public/icon/preview_audio.png') }}");
+      $('#image_edit').attr('src',"public/icon/preview_audio.png");
       $("#image_edit").fadeIn();
     }
     if(type2 == 'application' ){
       if(type == "doc" || type == "docx"){
-        $('#image_edit').attr('src',"{{ asset('public/icon/preview_doc.png') }}");
+        $('#image_edit').attr('src',"public/icon/preview_doc.png'");
         $('#image_edit').fadeIn();
       }else if(type == "ppt" || type == "pptx"){
-        $('#image_edit').attr('src',"{{ asset('public/icon/preview_pp.png') }}");
+        $('#image_edit').attr('src',"public/icon/preview_pp.png");
         $('#image_edit').fadeIn();
       }else if(type == "xlsx" || type == "xlsm" || TypeNamefile == "xlsb"){
-        $('#image_edit').attr('src',"{{ asset('public/icon/preview_excel.png') }}");
+        $('#image_edit').attr('src',"public/icon/preview_excel.png");
         $('#image_edit').fadeIn();
       }else if(type == "pdf"){
-        $('#image_edit').attr('src',"{{ asset('public/icon/preview_pdf.png') }}");
+        $('#image_edit').attr('src',"public/icon/preview_pdf.png");
         $('#image_edit').fadeIn();
       }else{
-        $('#image_edit').attr('src',"{{ asset('public/icon/preview_file.png') }}");
+        $('#image_edit').attr('src',"public/icon/preview_file.png");
         $('#image_edit').fadeIn();
       }
     }
@@ -184,7 +184,7 @@ function deleteport(id,urld) {
          data: data2, // serializes the form's elements.
          success: function(result){
            console.log(result);
-           var audio = new Audio('public/tones/your-turn.mp3');
+           var audio = new Audio("public/tones/your-turn.mp3");
            audio.play();
          },
          error: function(xhr,textStatus){ alert(textStatus);}
@@ -214,7 +214,7 @@ function deleteThinkso(idstatus,urld,user_id) {
             $('#saveThinkso'+idstatus).html('I think so. ('+(result)+')');
           }
           $('#saveThinkso'+idstatus).fadeIn();
-          var audio = new Audio('/tones/your-turn.mp3');
+          var audio = new Audio("public/tones/your-turn.mp3");
           audio.play();
          },
          error: function(xhr,textStatus){ alert(textStatus);}
@@ -244,7 +244,7 @@ function saveThinkso(idstatus,urls,user_id) {
             $('#deleteThinkso'+idstatus).html('I think so. ('+(result)+')');
           }
           $('#deleteThinkso'+idstatus).fadeIn();
-          var audio = new Audio('/tones/just-like-that.mp3');
+          var audio = new Audio('public/tones/just-like-that.mp3');
           audio.play();
          },
          error: function(xhr,textStatus){ alert(textStatus);}

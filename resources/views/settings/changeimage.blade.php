@@ -97,6 +97,7 @@
           <input type="submit" id="submitchange" name="" value="">
         </form>
       </div>
+      <a id="togo" href="{{ url('/home') }}"></a>
       <script type="text/javascript">
        var src;
           $('#clickfile').click(function() {
@@ -203,7 +204,8 @@
            success: function(result) {
              console.log(result);
              if(result == 'success'){
-               location.reload();
+              setTimeout(function(){  document.getElementById('togo').click(); }, 1000);
+               
              }
            },
            error: function(xhr,textStatus){ alert(textStatus);}

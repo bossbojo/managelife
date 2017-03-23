@@ -178,13 +178,13 @@
                             <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
                             <li>
-                              <a href="{{ url('/home') }}">
+                              <a href="{{ url('/home') }}" id="gotohome">
                                 <img  class="img-circle" style="{{ Auth::user()->filter }}" src="{{ asset(''.Auth::user()->avatar) }}" width="22px">
                                 {{ Auth::user()->name }}
                               </a>
                             </li>
                             <li>
-                              <a href="#"><i class="glyphicon glyphicon-upload"></i> FileUpload</a>
+                              <a href="{{ url('/fileupload') }}"><i class="glyphicon glyphicon-upload"></i> FileUpload</a>
                             </li>
                              <!-- เเจ้งเตือนเพิ่มเพื่อน -->
                             <li class="dropdown">
@@ -343,7 +343,13 @@
                                 $.getJSON( link, function( data ) {
                                   datacommet = data.result;
                                   var num = datacommet.length;
+
                                   for (var i = 0; i < num; i++) {
+                                    var imgto = datacommet[i].avatar;
+                                    var img = imgto.split('/');
+                                    if(img[0] == 'public'){
+                                      imgto = '{{ asset("") }}'+datacommet[i].avatar;
+                                    }
                                     htmlstr += '<tr>';
                                     if(datacommet[i].open == 0){
                                       htmlstr += '<td class="alert">';
@@ -354,7 +360,7 @@
                                         touser = "{{ url('user') }}/"+datacommet[i].friend_id+'/'+datacommet[i].id;
                                         htmlstr += '<a href="'+touser+'" style="width:450px;" class="btnMenulife" style="" >';
                                         htmlstr += '<div class="col-md-2"> \
-                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+datacommet[i].avatar+'" alt="" width="100%"> \
+                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+imgto+'" alt="" width="100%"> \
                                                     </div>';
                                         htmlstr += '<div class="col-md-9"> \
                                                       <b>'+datacommet[i].name+'</b><span for="" style="color:#000;"> <u>Acceptance</u> You are friend </span><br> \
@@ -368,7 +374,7 @@
                                         touser = "{{ url('showonly') }}/"+datacommet[i].data+'/'+datacommet[i].id;
                                         htmlstr += '<a href="'+touser+'" style="width:450px;"  class="btnMenulife" style="" >';
                                         htmlstr += '<div class="col-md-2"> \
-                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+datacommet[i].avatar+'" alt="" width="100%"> \
+                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+imgto+'" alt="" width="100%"> \
                                                     </div>';
                                         htmlstr += '<div class="col-md-9">  \
                                                       <b>'+datacommet[i].name+'</b><span for="" style="color:#000;"> <u>I think so.</u> With you in your status</span><br> \
@@ -382,7 +388,7 @@
                                         touser = "{{ url('showonly') }}/"+datacommet[i].data+'/'+datacommet[i].id;
                                         htmlstr += '<a href="'+touser+'" style="width:450px;" class="btnMenulife" style="" >';
                                         htmlstr += '<div class="col-md-2"> \
-                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+datacommet[i].avatar+'" alt="" width="100%"> \
+                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+imgto+'" alt="" width="100%"> \
                                                     </div>';
                                         htmlstr += '<div class="col-md-9">  \
                                                       <b>'+datacommet[i].name+'</b><span for="" style="color:#000;"> <u>have comment</u> in your status</span><br> \
@@ -396,7 +402,7 @@
                                         touser = "{{ url('showonly') }}/"+datacommet[i].data+'/'+datacommet[i].id;
                                         htmlstr += '<a href="'+touser+'" style="width:450px;" class="btnMenulife" style="" >';
                                         htmlstr += '<div class="col-md-2"> \
-                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+datacommet[i].avatar+'" alt="" width="100%"> \
+                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+imgto+'" alt="" width="100%"> \
                                                     </div>';
                                         htmlstr += '<div class="col-md-9">  \
                                                       <b>'+datacommet[i].name+'</b><span for="" style="color:#000;"> <u>have reply comment</u> in status\'s that you comment</span><br> \
@@ -404,6 +410,48 @@
                                                     </div> \
                                                     <div class="col-md-1"> \
                                                       <i style="color:#d92ea9;" class="glyphicon glyphicon-comment"></i> \
+                                                    </div>';
+                                    }
+                                    if(datacommet[i].type == 'QandA'){
+                                        touser = "{{ url('showQ') }}/"+datacommet[i].data+'/'+datacommet[i].id;
+                                        htmlstr += '<a href="'+touser+'" style="width:450px;" class="btnMenulife" style="" >';
+                                        htmlstr += '<div class="col-md-2"> \
+                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+imgto+'" alt="" width="100%"> \
+                                                    </div>';
+                                        htmlstr += '<div class="col-md-9">  \
+                                                      <b>'+datacommet[i].name+'</b><span for="" style="color:#000;"> <u>have reply question</u> in your Question and Answer </span><br> \
+                                                      <span for="" style="color:#000; opacity:0.5; font-size:12px;">'+datacommet[i].created_at+'</span> \
+                                                    </div> \
+                                                    <div class="col-md-1"> \
+                                                      <i style="color:#d92ea9;" class="glyphicon glyphicon-comment"></i> \
+                                                    </div>';
+                                    }
+                                    if(datacommet[i].type == 'favorite'){
+                                        touser = "{{ url('feedback') }}/"+datacommet[i].data+'/'+datacommet[i].id;
+                                        htmlstr += '<a href="'+touser+'" style="width:450px;" class="btnMenulife" style="" >';
+                                        htmlstr += '<div class="col-md-2"> \
+                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+imgto+'" alt="" width="100%"> \
+                                                    </div>';
+                                        htmlstr += '<div class="col-md-9">  \
+                                                      <b>'+datacommet[i].name+'</b><span for="" style="color:#000;"> <u>have favorite your portfolio</u></span><br> \
+                                                      <span for="" style="color:#000; opacity:0.5; font-size:12px;">'+datacommet[i].created_at+'</span> \
+                                                    </div> \
+                                                    <div class="col-md-1"> \
+                                                      <i style="color:rgb(21, 164, 217);" class="glyphicon glyphicon-briefcase"></i> \
+                                                    </div>';
+                                    }
+                                    if(datacommet[i].type == 'feedback'){
+                                        touser = "{{ url('feedback') }}/"+datacommet[i].data+'/'+datacommet[i].id;
+                                        htmlstr += '<a href="'+touser+'" style="width:450px;" class="btnMenulife" style="" >';
+                                        htmlstr += '<div class="col-md-2"> \
+                                                      <img class="img-circle" style="'+datacommet[i].filter+'" src="'+imgto+'" alt="" width="100%"> \
+                                                    </div>';
+                                        htmlstr += '<div class="col-md-9">  \
+                                                      <b>'+datacommet[i].name+'</b><span for="" style="color:#000;"> <u>have feedback your portfolio</u> form this user</span><br> \
+                                                      <span for="" style="color:#000; opacity:0.5; font-size:12px;">'+datacommet[i].created_at+'</span> \
+                                                    </div> \
+                                                    <div class="col-md-1"> \
+                                                      <i style="color:rgb(139, 128, 96);" class="glyphicon glyphicon-hand-left"></i> \
                                                     </div>';
                                     }
                                       htmlstr += '</a>';
@@ -439,6 +487,9 @@
                                     </li>
                                     <li>
                                         <a href="{{ url('settings/changeimage') }}"><i class="glyphicon glyphicon-user"></i> Change image profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('settings/changeimagecover') }}"><i class="glyphicon glyphicon-picture"></i> Change image cover</a>
                                     </li>
                                     @if(Auth::user()->provider == 'managelife')
                                     <li>

@@ -11,7 +11,9 @@ use App\Commentpost;
 use App\User;
 use App\Alert_friends;
 use App\Alert;
-
+use App\Indexportfolio;
+use App\Dataportfolio;
+use App\Listpresent;
 
 class HomeController extends Controller
 {
@@ -36,6 +38,119 @@ class HomeController extends Controller
         $login = User::find(Auth::user()->id);
         $login->online = 'true';
         $login->save();
+
+        $find = Indexportfolio::find(Auth::user()->id);
+        if ($find == '') {
+            //-----------------portfolio-------------------------------------
+            $indexportfolio = new Indexportfolio;
+            $indexportfolio->id = Auth::user()->id;
+            $indexportfolio->background = 'public/img/bg_port/2.jpg';
+            $indexportfolio->position = '[ { "x": 0, "y": 0, "width": 2, "height": 6 }, { "x": 2, "y": 0, "width": 10, "height": 6 }, { "x": 0, "y": 6, "width": 4, "height": 6 }, { "x": 4, "y": 6, "width": 2, "height": 6 }, { "x": 6, "y": 6, "width": 6, "height": 3 }, { "x": 6, "y": 9, "width": 6, "height": 3 } ]';
+            $dataportfolio = dataportfolio::all();
+            $maxid  = 1;
+            $iddata = '';
+              foreach ($dataportfolio as $id) {
+                 if($id->id > $maxid ){
+                   $maxid = $id->id;
+                 }
+              }
+            $pointer  = array(0,5,1,2,3,3); //18,11,25,26,33,39
+            for($i = 0 ; $i < sizeof($pointer);$i++){
+              for($k = 0 ; $k<10 ;$k++) {
+                $maxid++;
+                if($maxid%6==$pointer[$i]){
+                  $k = 10;
+                }
+              }
+              if($i!=sizeof($pointer)-1){
+                $iddata .= $maxid.',';
+              }else{
+                $iddata .= $maxid;
+              }
+              if($maxid%6==0){
+                $savedata = new Dataportfolio;
+                $savedata->id = $maxid;
+                $savedata->titlesmall	 = 'Title description';
+                $savedata->text = "description";
+                $savedata->colorfont1	 = '#000000';
+                $savedata->colorfont2	 = '#000000';
+                $savedata->colorbg1	 = '#ffffff';
+                $savedata->colorbg2	 = '#ffffff';
+                $savedata->save();
+              }
+              if($maxid%6==1){
+                $savedata = new Dataportfolio;
+                $savedata->id = $maxid;
+                $savedata->video = "public/img/bg_port/videotest.mp4";
+                $savedata->title = "TITLE VIDEO";
+                $savedata->titlesmall = "Title description";
+                $savedata->text = "description";
+                $savedata->colorfont1	 = '#000000';
+                $savedata->colorfont2	 = '#000000';
+                $savedata->colorbg1	 = '#ffffff';
+                $savedata->colorbg2	 = '#ffffff';
+                $savedata->save();
+              }
+              if($maxid%6==2){
+                $savedata = new Dataportfolio;
+                $savedata->id = $maxid;
+                $savedata->img = "public/img/bg_port/imgtest.jpg";
+                $savedata->title = "TITLE PHOTO";
+                $savedata->titlesmall = "Title description";
+                $savedata->text = "description";
+                $savedata->colorfont1	 = '#000000';
+                $savedata->colorfont2	 = '#000000';
+                $savedata->colorbg1	 = '#ffffff';
+                $savedata->colorbg2	 = '#ffffff';
+                $savedata->save();
+              }
+              if($maxid%6==3){
+                $savedata = new Dataportfolio;
+                $savedata->id = $maxid;
+                $savedata->title = "TITLE Article";
+                $savedata->titlesmall = "Title description";
+                $savedata->text = "description";
+                $savedata->colorfont1	 = '#000000';
+                $savedata->colorfont2	 = '#000000';
+                $savedata->colorbg1	 = '#ffffff';
+                $savedata->colorbg2	 = '#ffffff';
+                $savedata->save();
+              }
+              if($maxid%6==4){
+                $savedata = new Dataportfolio;
+                $savedata->id = $maxid;
+                $savedata->video = "empty";
+                $savedata->colorfont1	 = '#000000';
+                $savedata->colorfont2	 = '#000000';
+                $savedata->colorbg1	 = '#ffffff';
+                $savedata->colorbg2	 = '#ffffff';
+                $savedata->save();
+              }
+              if($maxid%6==5){
+                $savedata = new Dataportfolio;
+                $savedata->id = $maxid;
+                $savedata->img = "public/img/bg_port/coverport.jpg";
+                $savedata->colorfont1	 = '#000000';
+                $savedata->colorfont2	 = '#000000';
+                $savedata->colorbg1	 = '#ffffff';
+                $savedata->colorbg2	 = '#ffffff';
+                $savedata->save();
+              }
+            }
+            $indexportfolio->indexbox = '['.$iddata.']';
+            $indexportfolio->id_fk = '['.$iddata.']';
+            $indexportfolio->phpindex = $iddata;
+            $indexportfolio->save();
+            //-----------------------------------------------
+        }
+        $find = Listpresent::find(Auth::user()->id);
+        $findindex = Indexportfolio::find(Auth::user()->id);
+        if($find == ''){
+           $new = new Listpresent;
+           $new->id = Auth::user()->id;
+           $new->idfodata = $findindex->phpindex;
+           $new->save();
+        }
         return view('home');
     }
     public function ohter_users($id){
@@ -267,7 +382,7 @@ class HomeController extends Controller
     }
     $namefile = 'crop_profile.jpg';
     $update1 = User::find(Auth::user()->id);
-    $update1->avatar = '/'.$url.'/'.$namefile;
+    $update1->avatar = $url.'/'.$namefile;
     $update1->filter = $input['css'];
     $update1->save();
     $data = $input['newimg'];
@@ -275,6 +390,20 @@ class HomeController extends Controller
     list(, $data)      = explode(',', $data);
     $data = base64_decode($data);
     file_put_contents( $url.'/'.$namefile, $data);
+    return 'success';
+  }
+  public function saveImgCover(){
+    $file = Input::file('file');
+    $url = 'public/upload'.'/'.Auth::user()->id.'@'.Auth::user()->email.'/cover';
+    if( !is_dir($url)){ //create folder
+       mkdir($url, 0777, true);
+    }
+    $file->move($url,$file->getClientOriginalName());
+
+    $update1 = User::find(Auth::user()->id);
+    $update1->cover = $url.'/'.$file->getClientOriginalName();
+    $update1->save();
+
     return 'success';
   }
   public function readall(){

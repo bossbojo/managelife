@@ -1,9 +1,9 @@
 
 <div class="panel panel-default" style="border-radius-: 20px; background-color:#111; border-color:#111;">
-    <div class="panel-heading border-radius-top-20px" style=" background-color:#cc9900; border-color:#888; text-align:center;" >
-      <a href="{{ url('home') }}" class="btnMenulife" >
-        <img  class="img-circle" style="border-color:#000; {{ Auth::user()->filter }} " src="{{ asset(''.Auth::user()->avatar) }}" width="100px">
-        <span for="" style="font-size:150%; color:#000;">&nbsp;&nbsp; {{ Auth::user()->name }}</span>
+    <div class="panel-heading border-radius-top-20px" style=" background-color:#cc9900; border-color:#888; text-align:center;" align="center" >
+      <a href="{{ url('home') }}" class="btnMenulife" align="center">
+          <img  class="img-circle" style="border-color:#000; {{ Auth::user()->filter }} " src="{{ asset(''.Auth::user()->avatar) }}" width="100px">
+          <span for="" style="font-size:150%; color:#000;"> {{ Auth::user()->name }}</span>
       </a>
     </div>
     <div class=" border-radius-bottom-20px" style="border-color:#111;">
@@ -15,7 +15,7 @@
                 </a>
                 <ul class="gw-submenu">
                   <li>
-                    <a href="javascript:void(0)" style=" font-size:17px; padding-top:10px; padding-left:120px; " >
+                    <a href="{{ url('/portfolio') }}" style=" font-size:17px; padding-top:10px; padding-left:120px; " >
                       <img  src="{{ asset('public/icon/preview.png') }}" width="25" alt=""> Preview Portfolio
                     </a>
                   </li>
@@ -80,6 +80,16 @@
                     </a>
                   </li>
                   @endif
+                  <li>
+                    <a href="{{ url('settings/changeimage') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
+                      <img  src="{{ asset('public/icon/camerachage.png') }}" width="25" alt=""> Change image profile
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ url('settings/changeimagecover') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
+                      <img  src="{{ asset('public/icon/imgcover.png') }}" width="25" alt=""> Change image cover
+                    </a>
+                  </li>
                   <li>
                     <a href="{{ url('settings/editprofile') }}" style=" font-size:17px; padding-top:10px; padding-left:120px;" >
                       <img  src="{{ asset('public/icon/editprofile.png') }}" width="25" alt=""> Edit Profile

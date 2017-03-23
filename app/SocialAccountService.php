@@ -33,8 +33,11 @@ class SocialAccountService
                     'name' => $providerUser->getName(),
                     'avatar' => $providerUser->getAvatar(),
                     'provider' => $providerName,
+                    'cover' => 'public\default-img\default-bg.jpg',
                     'online' => '1',
                     'filter' => 'null',
+                    'disk' => 0,
+                    'limitdisk' => 2.5,
                 ]);
             }
 

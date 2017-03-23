@@ -66,10 +66,13 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'avatar' => 'public\default-img\profile-icon.png',
+            'avatar' => 'public/default-img/profile-icon.png',
+            'cover' => 'public/default-img/default-bg.jpg',
             'provider' => 'managelife',
             'online' => 1,
             'filter' => 'null',
+            'disk' => 0,
+            'limitdisk' => 2560,
         ]);
     }
 }

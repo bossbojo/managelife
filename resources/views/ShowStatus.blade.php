@@ -232,8 +232,15 @@ foreach ($users as $yourstatus) {
                 <hr style="border-color:#888; margin:5px;">
                 <table style="width:100%">
                 <tr>
+                  <?php
+                    $img = Auth::user()->avatar;
+                    $check = explode("/", $img);
+                    if($check[0] == 'public'){
+                      $img = asset(Auth::user()->avatar);
+                    }
+                   ?>
                   <td style="width:{{ strlen(Auth::user()->name)+150 }}px;">
-                    <img  class="img-circle" style="border-color:#000; {{ Auth::user()->filter }}" src="{{ asset(''.Auth::user()->avatar) }}" width="40px">
+                    <img  class="img-circle" style="border-color:#000; {{ Auth::user()->filter }}" src="{{ $img }}" width="40px">
                     {{ Auth::user()->name }}
                   </td>
                   <td>
