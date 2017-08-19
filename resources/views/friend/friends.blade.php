@@ -156,7 +156,7 @@
             $touer = url('/user');
             $touer .= '/'.$user->id;
          ?>
-        <div class="col-md-2">
+        <div class="col-md-2" id="div{{ $user->id }}">
           <div class="panel panel-default  border-radiusbox " style="background-color:#444; border-color:#333; " align="center">
             <div class="shadow" >
               <a href="{{ $touer }}" class="btnMenulife">
@@ -164,12 +164,13 @@
                 <span for="" style="font-size:17px; color:#777;"><b>{{ $user->name }}</b></span>
               </a>
               <hr style="margin:2px; border-color:#555;">
-              <a href="#" onclick="popup_worng('ssssssssss')" class="btnMenulife" style="color:#777">
+              <a href="#" onclick="popup_worng('คุณต้องการที่จะลบเพื่อนคนนี้ใช่หรือไม่',{{$user->id}})" class="btnMenulife" style="color:#777">
                 <span for="" style="font-size:13px;"><b>Remove friend</b></span>
               </a>
             </div>
           </div>
         </div>
+
         <?php   } } } ?>
       </div>
     </div>
@@ -178,18 +179,33 @@
 <br>
 
 <script type="text/javascript">
-function popup_worng(title2) {
-  var p = new Popelt({
-    title: title2,
-    closeButton: false,
-    escClose: false,
-    modal: true
-  });
-  p.addButton('OK','btn btn-danger', function(){
-
-    p.close();
-  });
-  p.show();
+function popup_worng(title2,id) {
+   var p = new Popelt({
+        title: title2,
+        closeButton: false,
+        escClose: false,
+        modal: true
+      });
+      p.addButton('Yes','btn btn-danger', function(){
+              var data2 = { Id : '{{ Auth::user()->id }}' ,
+                            Id_friend : id };
+              var url2 = "{{ url('/removefriend') }}"; // the script where you handle the form input.
+              $.ajax({
+                     type: "get",
+                     url: url2,
+                     data: data2, // serializes the form's elements.
+                     success: function(result){
+                       console.log(result);
+                       if(result=='success'){
+                        $('#div'+id).fadeOut();
+                       }
+                     },
+                     error: function(xhr,textStatus){ alert(textStatus);}
+                   });
+        p.close();
+      });
+      p.addCancelButton();
+      p.show();
 }
 </script>
 @endsection

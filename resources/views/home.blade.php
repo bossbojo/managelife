@@ -97,7 +97,7 @@
                     </ul>
                   </li>
                   <li class="gw-submenu">
-                    <a href="#" style=" font-size:20px; padding-top:10px; padding-left:50px; letter-spacing: 4px; ">
+                    <a href="{{ url('/contactus') }}" style=" font-size:20px; padding-top:10px; padding-left:50px; letter-spacing: 4px; ">
                       <img  src="{{ asset('public/icon/contact-us.png') }}" width="35" alt=""> contact us
                     </a>
                   </li>

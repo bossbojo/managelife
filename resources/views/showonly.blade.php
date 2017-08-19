@@ -16,7 +16,6 @@
 
                                                                   <!-- tag post  -->
         <div class="col-md-8 col-md-offset-2" style="overflow-y:scroll; " id="style-1">
-
           <br><br>
             <script src="{{ asset('public/js/home.js') }}"></script>
                                                                   <!-- show post  -->
@@ -67,6 +66,7 @@
                },
                error: function(xhr,textStatus){ alert(textStatus);}
              });
+            
           </script>
           <!-- if has file -->
           <div id="myModal2" class="modal">
@@ -95,6 +95,9 @@
               </div>
             </div>
           </div>
+          <?php
+            print 'sss';
+          ?>
           <script type="text/javascript">
           var save_editposturl_file = "{{ url('/save_editposturl_file') }}";
            $('#save_editposturl_file').ajaxForm({
@@ -321,9 +324,8 @@
             }
         </script>
 </div>
+
 <script type="text/javascript">
-
-
   (function() {
     var ga = document.createElement('script');
     ga.type = 'text/javascript';

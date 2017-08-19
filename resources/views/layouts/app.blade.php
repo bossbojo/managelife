@@ -93,27 +93,30 @@
                     @if (Auth::guest())
                     <!-- <li><a href="{{ url('/home') }}">Home</a></li> -->
                     @else
-                    <ul class="nav navbar-nav" style="padding: 12px 0px 10px 50px;" style="border-color:#000;">
-                        <li class="dropdown">
-                          <a href="#" id="ShowBarSearch" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="display:none;"></a>
-                              <form autocomplete="off" action="{{ url('/searchfriends') }}" method="get" id="search">
-                                  <input id="inputsearch" onclick="searchShow()" name="name_friend" type="text" size="40" placeholder="Search friends..." />
-                              </form>
-                            <ul class="dropdown-menu searchfriendhei" style="overflow-y:scroll;" id="style-2" role="menu">
-                              <li >
-                                  <a style="width:350px;" id="dataSearch">
-                                     <i class="glyphicon glyphicon-search"></i> :
-                                  </a>
-                              </li>
-                              <hr style="margin-top:2px;margin-bottom:5px; border-color:#dddddd;">
-                                <li id="user_search">
-                                    <a href="" style="width:350px;" align="center">
-                                        <img src="{{ asset('public/icon/ajax-loader.gif') }}" alt="">
+                      @if(Auth::user()->blocking != 'block')
+                      <ul class="nav navbar-nav" style="padding: 12px 0px 10px 50px;" style="border-color:#000;">
+                          <li class="dropdown">
+                            <a href="#" id="ShowBarSearch" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="display:none;"></a>
+                                <form autocomplete="off" action="{{ url('/searchfriends') }}" method="get" id="search">
+                                    <input id="inputsearch" onclick="searchShow()" name="name_friend" type="text" size="40" placeholder="Search friends..." />
+                                </form>
+                              <ul class="dropdown-menu searchfriendhei" style="overflow-y:scroll;" id="style-2" role="menu">
+                                <li >
+                                    <a style="width:350px;" id="dataSearch">
+                                       <i class="glyphicon glyphicon-search"></i> :
                                     </a>
                                 </li>
-                            </ul>
-                        </li>
-                    </ul>
+                                <hr style="margin-top:2px;margin-bottom:5px; border-color:#dddddd;">
+                                  <li id="user_search">
+                                      <a href="" style="width:350px;" align="center">
+                                          <img src="{{ asset('public/icon/ajax-loader.gif') }}" alt="">
+                                      </a>
+                                  </li>
+                              </ul>
+                          </li>
+                      </ul>
+                      @endif
+
                     <script>
                         $('#inputsearch').keyup(function(){
                           $('#dataSearch').html('<i class="glyphicon glyphicon-search"></i> : '+ $('#inputsearch').val());
@@ -183,6 +186,7 @@
                                 {{ Auth::user()->name }}
                               </a>
                             </li>
+                            @if(Auth::user()->blocking != 'block')
                             <li>
                               <a href="{{ url('/fileupload') }}"><i class="glyphicon glyphicon-upload"></i> FileUpload</a>
                             </li>
@@ -477,11 +481,13 @@
                                      });
                               }
                             </script>
+                            @endif
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="glyphicon glyphicon-cog"></i><span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
+                                  @if(Auth::user()->blocking != 'block')
                                     <li>
                                         <a href="{{ url('settings') }}"><i class="glyphicon glyphicon-cog"></i> Setting</a>
                                     </li>
@@ -499,6 +505,7 @@
                                     <li>
                                         <a href="{{ url('settings/editprofile') }}"><i class="glyphicon glyphicon-edit"></i> Edit Profile</a>
                                     </li>
+                                  @endif
                                     <li>
                                         <a href="{{ url('/logout') }}" id="logout"
                                             onclick="event.preventDefault();

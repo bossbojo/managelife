@@ -38,6 +38,7 @@ class SocialAccountService
                     'filter' => 'null',
                     'disk' => 0,
                     'limitdisk' => 2.5,
+                    'blocking' => 'normal',
                 ]);
             }
 

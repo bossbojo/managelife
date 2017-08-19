@@ -1035,13 +1035,11 @@ if(Auth::guest()==''){
                                 <!-- accept="video/mp4" -->
                                 <input class="btn btn-default" type="file" id="filevideo" name="filevideo"><br>
                                 <script type="text/javascript">
-                                document.querySelector('#filevideo').addEventListener('change', function(){
-                                  var reader = new FileReader();
-                                  reader.onload = function(e) {
-                                      var sizefile = ((e.loaded/1024)/1024).toFixed(2);
-                                      console.log(sizefile);
-                                      $('#sizefilevideo').val(sizefile);
-                                  }
+                                $('#filevideo').bind('change', function() {
+                                  var size = ((this.files[0].size)/1024/1024).toFixed(2);
+                                  //this.files[0].size gets the size of your file.
+
+                                  $('#sizefilevideo').val(size);
 
                                 });
                                 </script>
@@ -1180,11 +1178,25 @@ if(Auth::guest()==''){
                                 <input type="hidden" value="video" name="check">
                                 <input type="hidden" value="" name="id5" id="id5">
                                 <input type="hidden" value="" id="timeset4"  name="timeset4">
+                                <input type="hidden" value="" id="sizefilevideo2"  name="sizefilevideo2">
                                 <center>
                                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                   <img src="public/img/icon/video.png" style="height:40%;width:40%;object-fit: cover;"><br><br>
                                   <input class="btn btn-default" type="file" id="filevideo2" name="filevideo" ><br>
                                 </center><br>
+                                <script type="text/javascript">
+                                document.querySelector('#filevideo2').addEventListener('change', function(){
+                                  var reader = new FileReader();
+                                  reader.onload = function(e) {
+                                      $('#img2').attr("src",e.target.result);
+                                      var sizefile = ((e.loaded/1024)/1024).toFixed(2);
+                                      console.log(sizefile);
+                                      $('#sizefilephoto21').val(sizefile);
+                                  }
+                                  reader.readAsDataURL(this.files[0]);
+                                  this.files = [];
+                                });
+                                </script>
                                 <div align="right"  class="col-md-12"><br>
                                     <div class="progress progress-striped active" >
                                           <div id="progress-bar3" class="progress-bar" style="width:0%;"></div>

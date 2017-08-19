@@ -495,7 +495,7 @@
                   <div class="col-md-6 col-md-offset-6">
                     <form action="" method="get">
                       <div class="input-group">
-                        <input type="text" name="searchQA" class="form-control" placeholder="Search Question" style="background-color:#222; border-color:#333;">
+                        <input type="text" name="searchQA" id="searchQA" class="form-control" placeholder="Search Question" style="background-color:#222; border-color:#333;">
                         <div class="input-group-btn">
                           <button class="btn btn-default" style="background-color:#aaa; border-color:#333;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                         </div>
@@ -534,6 +534,10 @@
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(ga, s);
   })();
-
+  
+  $('#searchQA').keyup(function(){
+    var all = document.getElementById("QA");
+    console.log(all.length;
+  });
 </script>
 @endsection

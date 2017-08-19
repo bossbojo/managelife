@@ -20,8 +20,10 @@ class HomeController extends Controller
     public function __construct(){
         $this->middleware('auth');
     }
-    public function index()
-    {
+    public function index(){
+      if(Auth::user()->blocking == 'block'){
+        return redirect('/contactus.blocking');
+      }
       $selectfriend = DB::table('alert_friend')
                       ->where([
                         ['user_id', '=', Auth::user()->id ],

@@ -73,6 +73,7 @@ class RegisterController extends Controller
             'filter' => 'null',
             'disk' => 0,
             'limitdisk' => 2560,
+            'blocking' => 'normal',
         ]);
     }
 }

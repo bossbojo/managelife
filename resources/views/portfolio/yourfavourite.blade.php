@@ -155,7 +155,7 @@
         <div class="col-md-2">
           <div class="panel panel-default  border-radiusbox " style="background-color:#444; border-color:#333; " align="center">
             <div class="shadow" >
-              <a href="{{ url('user').'/'.$user->id }}" class="btnMenulife">
+              <a href="{{ url('portfolio').'/'.$user->id }}" class="btnMenulife">
                 <img  style="{{ $user->avatar }}" src="{{ $user->avatar }}" alt="" width="100%">
                 <span for="" style="font-size:17px; color:#777;"><b>{{ $user->name }}</b></span>
               </a>

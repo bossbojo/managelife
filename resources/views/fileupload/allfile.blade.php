@@ -137,6 +137,8 @@
   use App\Favorite;
   use App\Feedback;
   use App\User;
+  use App\Fileupload;
+
   $p = (Auth::user()->disk*100)/Auth::user()->limitdisk;
   $p = number_format($p, 2, '.', '');
    ?>
@@ -176,14 +178,6 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12" >
-          <hr style="margin:10px; border-color:#555;">
-          <div id="showupload" class="" style="display:none;padding:5px;" align="right">
-            <a href="#" class="btnMenulife" style="color:#aaa;">
-              <img src="{{ asset('public\icon\upload-icon.png') }}" alt="" width="40px"> Upload your file
-            </a>
-          </div>
-        </div>
         <!-- table portfolio-->
         <div id="portfoliofile" class="col-md-12" style="color:rgb(128, 128, 128); display:none;">
           <table id="example" class="table  table-bordered" cellspacing="0" width="100%" style="border-color:#555;">
@@ -204,11 +198,14 @@
                 $file = Dataportfolio::find($idsplit[$i]);
                 if($file->sizefile != ''){
                   $filedetail;
+                  $pathfile;
                   if($file->video != ''){
+                    $pathfile =  $file->video;
                     $path = explode("/", $file->video );
                     $filedetail = explode(".", $path[sizeof($path)-1]);
                   }
                   if($file->img != ''){
+                    $pathfile =  $file->img;
                     $path = explode("/", $file->img);
                     $filedetail = explode(".", $path[sizeof($path)-1]);
                   }
@@ -219,7 +216,7 @@
                     <td style="border-color:#555;">{{ $filedetail[1] }}</td>
                     <td style="border-color:#555;">{{ $file->created_at }}</td>
                     <td style="border-color:#555;" style="" align="center">
-                      <a href="#">
+                      <a href="{{ $pathfile }}" onclick="Download( {{ $pathfile }})">
                         <img src="{{ asset('public\icon\Downloads.ico') }}" alt="" width="30px">
                       </a>
                     </td>
@@ -237,7 +234,15 @@
         </script>
         </div>
         <!-- table Your file-->
-        <div id="yourfile" class="col-md-12" style="color:rgb(128, 128, 128); display:none;">
+        <div class="col-md-12" >
+          <hr style="margin:10px; border-color:#555;">
+          <div id="showupload" class="" style="display:;padding:5px;" align="right">
+            <a href="#" class="btnMenulife" style="color:#aaa;" onclick="clickto()">
+              <img src="{{ asset('public\icon\upload-icon.png') }}" alt="" width="40px"> Upload your file
+            </a>
+          </div>
+        </div>
+        <div id="yourfile" class="col-md-12" style="color:rgb(128, 128, 128); display:;">
           <table id="example2" class="table  table-bordered" cellspacing="0" width="100%" style="border-color:#555;">
             <thead style="border-color:#555;">
                 <tr>
@@ -250,41 +255,40 @@
             </thead>
             <tbody>
               <?php
-              $fileall = Indexportfolio::find(Auth::user()->id);
-              $idsplit = explode(",", $fileall->phpindex);
-              for ($i=0; $i < sizeof($idsplit) ; $i++) {
-                $file = Dataportfolio::find($idsplit[$i]);
-                if($file->sizefile != ''){
-                  $filedetail;
-                  if($file->video != ''){
-                    $path = explode("/", $file->video );
-                    $filedetail = explode(".", $path[sizeof($path)-1]);
-                  }
-                  if($file->img != ''){
-                    $path = explode("/", $file->img);
-                    $filedetail = explode(".", $path[sizeof($path)-1]);
-                  }
+              $yourfiles = DB::table('fileupload')
+                              ->where([
+                                ['user_id', '=', Auth::user()->id ]
+                              ])->get();
+              foreach ($yourfiles as $yourfile) {
+
                ?>
-                <tr>
-                    <td style="border-color:#555;">{{ $filedetail[0] }}</td>
-                    <td style="border-color:#555;">{{ $file->sizefile }}</td>
-                    <td style="border-color:#555;">{{ $filedetail[1] }}</td>
-                    <td style="border-color:#555;">{{ $file->created_at }}</td>
+                <tr id="t{{ $yourfile->id }}">
+                    <td style="border-color:#555;">{{ $yourfile->namefile }}</td>
+                    <td style="border-color:#555;">{{ $yourfile->sizefile }}</td>
+                    <td style="border-color:#555;">{{ $yourfile->type }}</td>
+                    <td style="border-color:#555;">{{ $yourfile->created_at }}</td>
                     <td style="border-color:#555;" style="" align="center">
-                      <a href="#">
+                      <a href="{{ $yourfile->file }}">
                         <img src="{{ asset('public\icon\Downloads.ico') }}" alt="" width="30px">
                       </a>
-                      <a href="#">
+                      <a href="{{ url('/delectfile').'/'.$yourfile->id }}">
                         <img src="{{ asset('public\icon\delete-xxl.png') }}" alt="" width="30px">
                       </a>
                     </td>
                 </tr>
                 <?php
-                  }
-                }
+              }
                  ?>
             </tbody>
         </table>
+        <form id="uploadfiletosave">
+          <input type="hidden" value="{{csrf_token() }}" name="_token">
+          <input id="file" type="file" name="file" value="" style="display:none;" onchange="gotosumit()">
+          <input id="Isubmit" type="submit" name="" value="" style="display:none;">
+        </form>
+        <div id="pg" class="progress" style="height:5px; display:none;">
+          <div id="pc" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%"></div>
+        </div>
         <script>
         $(document).ready(function() {
             $('#example2').DataTable();
@@ -300,6 +304,32 @@
   <b>You not friend !</b>
 </p> -->
 <script type="text/javascript">
+
+ $('#uploadfiletosave').ajaxForm({
+   type: "POST",
+   url: "{{ url('/uploadfiletosave') }}",
+   dataType: 'html', // serializes the form's elements.
+   uploadProgress: function (event,position,total,percent) {
+     $('#pg').css('display','block');
+     $('#pc').css('width',percent+'%');
+     console.log(percent);
+   },
+   success: function(result) {
+     console.log(result);
+     if(result == 'success'){
+       $('#pg').fadeOut();
+       location.reload();
+     }
+   },
+   error: function(xhr,textStatus){ alert(textStatus);}
+ });
+
+function gotosumit() {
+  $('#Isubmit').click();
+}
+function clickto() {
+  $('#file').click();
+}
 function openportfile() {
   $('#showupload').hide();
   $('#yourfile').hide();
@@ -323,5 +353,12 @@ function popup_worng(title2) {
   });
   p.show();
 }
+</script>
+
+<iframe id="my_iframe" style="display:none;"></iframe>
+<script>
+function Download(url) {
+    document.getElementById('my_iframe').src = url;
+};
 </script>
 @endsection

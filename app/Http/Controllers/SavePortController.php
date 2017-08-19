@@ -289,8 +289,6 @@ class SavePortController extends Controller
       $update->save();
     }
     public function savevideotextport(){
-      print('<br>videoandtext');
-      print_r(Input::all());
       $dataform = Input::all();
       $update = Dataportfolio::find($dataform['id2']);
       if(Input::hasFile('filevideo')) {
@@ -299,15 +297,22 @@ class SavePortController extends Controller
         if( !is_dir($url)){ //create folder crop
           mkdir($url, 0700,true);
         }
+        $nowsize2 = ((Auth::user()->disk + 0) - ($update->sizefile + 0))+($dataform['sizefilevideo']+0);
+        $savesize1 = User::find(Auth::user()->id);
+        $savesize1->disk = $nowsize2;
+        $savesize1->save();
+
         $path = $url;
         $file->move($path,$file->getClientOriginalName());
         $update->video = $path.'/'.$file->getClientOriginalName();
+        $update->sizefile = $dataform['sizefilevideo'];
       }
       //---------------save in database----------------------
       $update->text = sumall($dataform['detail1']);
       $update->title = sumall($dataform['titlename1']);
       $update->titlesmall = sumall($dataform['titledescription1']);
       $update->save();
+      return 'success';
     }
     public function savephototextport(){
       $dataform = Input::all();
@@ -355,9 +360,15 @@ class SavePortController extends Controller
         if( !is_dir($url)){ //create folder crop
           mkdir($url, 0700,true);
         }
+        $nowsize2 = ((Auth::user()->disk + 0) - ($update->sizefile + 0))+($dataform['sizefilevideo2']+0);
+        $savesize1 = User::find(Auth::user()->id);
+        $savesize1->disk = $nowsize2;
+        $savesize1->save();
+
         $path = $url;
         $file->move($path,$file->getClientOriginalName());
         $update->video = $path.'/'.$file->getClientOriginalName();
+        $update->sizefile = $dataform['sizefilevideo2'];
         $update->save();
         return 'success';
       }

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('filter')->nullable();
             $table->string('provider');
             $table->string('online');
+            $table->string('blocking');
             $table->string('disk')->nullable();
             $table->string('limitdisk')->nullable();
             $table->rememberToken();

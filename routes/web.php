@@ -52,6 +52,9 @@ Route::get('/', function () {
     if (Auth::guest()) {
       return view('welcome');
     }else{
+      if(Auth::user()->blocking == 'block'){
+        return redirect('/contactus.blocking');
+      }
       $ohter_users = User::find(Auth::user()->id);
       return  view('main', ['UserView' => $ohter_users]);
     }
@@ -75,35 +78,19 @@ Route::get('/removefriend', 'HomeController@removefriend');
 Route::get('/getalertall/{id}', 'HomeController@getalertall');
 Route::get('/getalert/{id}', 'HomeController@getalert');
 Route::get('/openalert/{id}', 'HomeController@openalert');
-Route::get('/yourfriends', function () {
-    return view('friend.friends');
-});
-Route::get('/menubarleft', function () {
-    return view('layouts.menubarleft');
-});
+Route::get('/yourfriends', function () { return view('friend.friends'); });
+Route::get('/menubarleft', function () { return view('layouts.menubarleft'); });
 /*
 |--------------------------------------------------------------------------
 | Question and Answer
 |--------------------------------------------------------------------------
 */
-Route::get('/question.and.answer', function () {
-    return view('QandA');
-});
-Route::get('/show.QA', function () {
-    return view('showQA');
-});
-Route::get('/show.Q', function () {
-    return view('showQ');
-});
-Route::get('/add.Q', function () {
-    return view('AddQ');
-});
-Route::get('/edit.Q', function () {
-    return view('EditQ');
-});
-Route::get('/show.success', function () {
-    return view('QAsaveSuccess');
-});
+Route::get('/question.and.answer', function () { return view('QandA'); });
+Route::get('/show.QA', function () { return view('showQA'); });
+Route::get('/show.Q', function () { return view('showQ'); });
+Route::get('/add.Q', function () { return view('AddQ'); });
+Route::get('/edit.Q', function () { return view('EditQ'); });
+Route::get('/show.success', function () {  return view('QAsaveSuccess'); });
 Route::get('/showQ/{id}', 'QandAController@showQ');
 Route::get('/showQ/{id}/{idalert}', 'QandAController@showQ2');
 Route::get('/toedit/{id}', 'QandAController@toedit');
@@ -223,3 +210,38 @@ Route::get('/presentUserfull/{id}', 'ListpresentController@presentUserfull');
 Route::get('/fileupload', function () {
     return view('fileupload.allfile');
 });
+Route::post('/uploadfiletosave', 'FileuploadController@uploadfiletosave');
+Route::get('/delectfile/{id}', 'FileuploadController@delectfile'); 
+/*
+|--------------------------------------------------------------------------
+| contact and report
+|--------------------------------------------------------------------------
+*/
+Route::get('/contactus', function () {
+    return view('contact.contact');
+});
+Route::get('/contactus.blocking', function () {
+    return view('contact.contactBlocking');
+});
+Route::post('/contacttosave', 'CandRController@contacttosave');
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin
+|--------------------------------------------------------------------------
+*/
+Route::get('/adminlogin', function () { return view('admin.loginAdmin'); });
+Route::get('/adminhome', function () {  return view('admin.Adminhome'); });
+Route::get('/Blocking', function () {  return view('admin.blocking'); });
+Route::get('/block', 'AdminController@block');
+Route::get('/unblock', 'AdminController@unblock');
+Route::get('/Contacting', function () {  return view('admin.contacting'); });
+Route::get('/Report', function () {  return view('admin.report'); });
+
+Route::post('/checklogin', 'AdminController@checklogin');
+Route::get('/logOutadmin', 'AdminController@logOutadmin');
+Route::get('/getdatauserto/{id}', 'AdminController@getdatauserto');
+Route::get('/getcontact/{id}', 'AdminController@getcontact');
+Route::get('/getalluser', 'AdminController@getalluser');
+Route::get('/delectcontact', 'AdminController@delectcontact');
